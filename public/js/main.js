@@ -14,7 +14,7 @@ function render(data) {
       return `
             <div class="container">
                   <ul class="list-inline">
-                        <li class="list-inline-item"><strong class="text-primary">${elem.author}</strong><p class="text-warning">${hora.toLocaleDateString()} - ${hora.toLocaleTimeString()}</p></li>
+                        <li class="list-inline-item"><strong class="text-primary">ID:${elem.id} - Author: ${elem.author}</strong><p class="text-warning">${hora.toLocaleDateString()} - ${hora.toLocaleTimeString()}</p></li>
                         <li class="list-inline-item font-italic text-success"><em>${elem.text}</em></li> 
                   </ul>
             </div>
