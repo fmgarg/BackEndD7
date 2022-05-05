@@ -63,23 +63,28 @@ io.on('connection', (socket) => {
       
                 })
 
-      socket.on('new-message', async (data) => { 
-        //---aca tengo que agregar la nueva data a la DB y luego getAll ()
-                await messages.push(data)
-                console.log(newMessages)
+      socket.on('new-message', async (mensaje) => { 
+        //---aca recibo el mensaje nuevo de addMessage/socket.emit
+                  const {optionsMSG} = require ('./optionsMSG/sqLite3') 
+                  const knexMSG = require ('knex') (optionsMSG);
+                  let insertNewMSGonBDD = await knexMSG('MSG')
+                                                .insert(mensaje)
+                                                .then(() => {
+                                                  //messages.push(mensaje)
+                                                  console.log('newMessage insert')
+                                                })
+                                                .catch((err) => {
+                                                  console.log(err)
+                                                  throw err
+                                                })
+                                                .finally(() => {
+                                                  knexMSG.destroy()
+                                                })
+                
+                await messages.push(mensaje)
+                //console.log(newMessages)
                 io.sockets.emit('messages', messages)
-                console.log (messages)
-                insertarNewMSG ()
-
-                /*
-                fs.writeFile('./messages.txt', JSON.stringify(messages, null, 4), error =>{
-                  if(error){
-                  } else {
-                  console.log("se guardo un nuevo mensaje.")
-                  }
-                });
-                */
-
+                //console.log (messages)
       })
 
       socket.on('nuevo-evento', (data) => {
@@ -112,14 +117,14 @@ const insertarMSGViejos = () =>{
 
 //--------esta funcion devuelve todos los mensajes de la tabla mensajes-----------
 
-const getAll = () =>{ 
+async function getAll (){ 
   
-  knexMSG
+  await knexMSG
     .from('MSG')
     .select('*')
     .then((rows) => {                
             messages = rows.map(mensaje => {return mensaje})            
-            console.log(messages)
+            return messages
             })
     .catch((err) => {
       console.log(err)
@@ -127,35 +132,5 @@ const getAll = () =>{
     .finally(() => {
       knexMSG.destroy()
     })
-
-}
-
-//console.log(getAll())
-
-//-------esta funcion agrega nuevos mensajes a la DB--------
-
-//trabajar con fswrite files
-newMessages = []
-
-module.exports['newMessages'] = newMessages
-
-const insertarNewMSG = (newMessages) =>{ 
-  
-  //const {insertNewMSG} = require('./optionsMSG/insertNewMSG')
-
-  /*
-  knexMSG('MSG')
-      .insert(newMessages)
-      .then(() => {
-        console.log('newMessage insert')
-      })
-      .catch((err) => {
-        console.log(err)
-        throw err
-      })
-      .finally(() => {
-        knexMSG.destroy()
-      })
-  */
 
 }

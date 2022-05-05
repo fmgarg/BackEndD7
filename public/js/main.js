@@ -1,4 +1,3 @@
-
 const socket = io.connect()
 
 socket.on('mi mensaje', (data) => {
@@ -8,13 +7,13 @@ socket.on('mi mensaje', (data) => {
 
 let hora = new Date ()
 
-function render(data) {
+function renderMSG(data) {
   const html = data
     .map((elem, index) => {
       return `
             <div class="container">
                   <ul class="list-inline">
-                        <li class="list-inline-item"><strong class="text-primary">ID:${elem.id} - Author: ${elem.author}</strong><p class="text-warning">${hora.toLocaleDateString()} - ${hora.toLocaleTimeString()}</p></li>
+                        <li class="list-inline-item"><strong class="text-primary">Author: ${elem.author}</strong><p class="text-warning">${hora.toLocaleDateString()} - ${hora.toLocaleTimeString()}</p></li>
                         <li class="list-inline-item font-italic text-success"><em>${elem.text}</em></li> 
                   </ul>
             </div>
@@ -22,6 +21,19 @@ function render(data) {
     })
     .join(' ')
   document.getElementById('mensajes').innerHTML = html
+}
+
+socket.on('messages', function (data) {
+  renderMSG(data)
+})
+
+function addMessage(e) {
+  const mensaje = {
+    author: document.getElementById('username').value,
+    text: document.getElementById('texto').value,
+  }
+  socket.emit('new-message', mensaje)
+  return false
 }
 
 function renderEventos(data) {
@@ -54,24 +66,11 @@ function renderEventos(data) {
   document.getElementById('tabla-eventos').innerHTML = html
 }
 
-socket.on('messages', function (data) {
-  render(data)
-})
-
 socket.on('socketEventos', function (data) {
   renderEventos(data)
 })
 
-function addMessage(e) {
-  const mensaje = {
-    author: document.getElementById('username').value,
-    text: document.getElementById('texto').value,
-  }
-  socket.emit('new-message', mensaje)
-  return false
-}
-
-function enviarActualizacion(e) {
+function addProduct(e) {
   const mensaje = {
     title: document.getElementById('title').value,
     price: document.getElementById('price').value,

@@ -2,25 +2,5 @@
     {
         "author": "fmgarg@gmail.com",
         "text": "¡Hola! ¿Que tal?"
-    },
-    {
-        "author": "fmgarg@gmail.com",
-        "text": "¡Muy bien! ¿Y vos?"
-    },
-    {
-        "author": "fmgarg@gmail.com",
-        "text": "¡Genial!"
-    },
-    {
-        "author": "pedro@gmail.com",
-        "text": "jajaja"
-    },
-    {
-        "author": "fmgarg@gmail.com",
-        "text": "hola, buen dia!"
-    },
-    {
-        "author": "pedro@gmail.com",
-        "text": "msg"
     }
 ]

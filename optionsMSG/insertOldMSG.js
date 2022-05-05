@@ -4,8 +4,8 @@ const {optionsMSG} = require ('./sqLite3')
 const knexMSG = require ('knex') (optionsMSG);
 
 const oldMessages = [
-    { author: 'fmgarg@gmail.com', text: '¡Hola! ¿Que tal?' },
-    { author: 'fmgarg@gmail.com', text: '¡Muy bien! ¿Y vos?' }
+    { author: '33333@gmail.com', text: '111111111111111111' },
+    { author: '44444@gmail.com', text: '222222222222222222' }
     ]
 
 module.exports['insertOldMSG'] = knexMSG('MSG')
